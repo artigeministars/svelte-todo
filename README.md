@@ -10,6 +10,6 @@ npm run db:push
 docker compose -f docker-compose.yml up -d
 
 details :
-simple a todo svelte app using drizzle orm and lucia auth add-ons respectively. 
+a simple todo svelte app using drizzle orm and lucia auth add-ons respectively. 
 posgres sql 
 
