@@ -1,0 +1,35 @@
+
+services:
+  db_postgres:
+    container_name: postgres_dev
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: local
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgresql:/docker-entrypoint-initdb.d
+
+  svelte-dev:
+    container_name: svelte_dev
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+    depends_on:
+      - db_postgres
+
+volumes:
+  pgdata:
+

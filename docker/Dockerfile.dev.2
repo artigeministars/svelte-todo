@@ -1,0 +1,33 @@
+# Utilize the following Dockerfile exclusively for earlier versions of Svelte.
+
+
+# Use the official Node.js image as the base image for older svelte project
+FROM node:12.8.0
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
+# Copy rollup.config.js
+COPY rollup.config.js ./
+
+# Install dependencies
+RUN npm install
+
+# Copy rest of the code base
+COPY ./src ./src
+COPY ./public ./public
+
+# Build the Svelte app
+RUN npm run build
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Host settings
+ENV HOST=0.0.0.0
+
+# Start the web server to serve the built app
+CMD ["npm", "start"]
